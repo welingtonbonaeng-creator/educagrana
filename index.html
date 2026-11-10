@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="EducaGrana: aprenda educação financeira jogando. Controle seus gastos, crie metas e simule investimentos com dinheiro virtual.">
+    <meta name="theme-color" content="#012816">
+    <title>EducaGrana | Aprenda, invista e evolua</title>
+    <link rel="icon" href="img/simbolo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+
+    <!-- ===================== BOAS-VINDAS E CADASTRO ===================== -->
+    <main id="entrada" class="entrada" aria-label="Boas-vindas" hidden>
+
+        <!-- Passo 1: apresentação -->
+        <section class="passo" id="passo-intro" aria-labelledby="titulo-intro">
+            <img src="img/logo-escuro.png" alt="EducaGrana" class="entrada-logo" width="480" height="176">
+            <h1 id="titulo-intro" class="entrada-titulo">Seu futuro financeiro começa aqui.</h1>
+            <p class="entrada-texto">Aprenda, invista e evolua. Cada missão, um aprendizado. Cada conquista, um passo para o futuro.</p>
+            <ul class="entrada-lista">
+                <li>Controle seus gastos sem planilha</li>
+                <li>Crie metas e veja quanto guardar por mês</li>
+                <li>Invista com dinheiro virtual, sem risco</li>
+            </ul>
+            <button type="button" class="botao botao-destaque botao-largo" data-ir-passo="passo-cadastro">Começar agora</button>
+            <p class="entrada-aviso">Todo o dinheiro do app é virtual. Simulação educativa, não é recomendação de investimento.</p>
+        </section>
+
+        <!-- Passo 2: cadastro -->
+        <section class="passo" id="passo-cadastro" aria-labelledby="titulo-cadastro" hidden>
+            <button type="button" class="botao-voltar" data-ir-passo="passo-intro">Voltar</button>
+            <h1 id="titulo-cadastro" class="entrada-titulo">Crie sua conta</h1>
+            <p class="entrada-texto">Leva menos de um minuto.</p>
+
+            <form id="form-cadastro" class="formulario" novalidate>
+                <div class="campo">
+                    <label for="cad-nome">Como quer ser chamado?</label>
+                    <input type="text" id="cad-nome" name="nome" autocomplete="given-name" required minlength="2" aria-describedby="erro-cad-nome">
+                    <p class="erro" id="erro-cad-nome" aria-live="polite"></p>
+                </div>
+                <div class="campo">
+                    <label for="cad-email">E-mail</label>
+                    <input type="email" id="cad-email" name="email" autocomplete="email" required aria-describedby="erro-cad-email">
+                    <p class="erro" id="erro-cad-email" aria-live="polite"></p>
+                </div>
+                <div class="campo">
+                    <label for="cad-senha">Senha</label>
+                    <input type="password" id="cad-senha" name="senha" autocomplete="new-password" required minlength="6" aria-describedby="dica-cad-senha erro-cad-senha">
+                    <p class="dica" id="dica-cad-senha">Mínimo de 6 caracteres, com pelo menos um número.</p>
+                    <p class="erro" id="erro-cad-senha" aria-live="polite"></p>
+                </div>
+                <div class="campo campo-check">
+                    <input type="checkbox" id="cad-termos" name="termos" required aria-describedby="erro-cad-termos">
+                    <label for="cad-termos">Entendo que o EducaGrana usa dinheiro virtual e serve para aprender.</label>
+                </div>
+                <p class="erro" id="erro-cad-termos" aria-live="polite"></p>
+                <button type="submit" class="botao botao-destaque botao-largo">Criar conta</button>
+            </form>
+        </section>
+
+        <!-- Passo 3: quiz de perfil de investidor -->
+        <section class="passo" id="passo-perfil" aria-labelledby="titulo-perfil" hidden>
+            <p class="etapa" id="quiz-etapa">Pergunta 1 de 3</p>
+            <h1 id="titulo-perfil" class="entrada-titulo">Qual é o seu perfil de investidor?</h1>
+            <form id="form-quiz" class="quiz">
+                <fieldset>
+                    <legend id="quiz-pergunta"></legend>
+                    <div class="quiz-opcoes" id="quiz-opcoes"></div>
+                </fieldset>
+                <p class="erro" id="erro-quiz" aria-live="polite"></p>
+                <button type="submit" class="botao botao-destaque botao-largo" id="quiz-botao">Próxima</button>
+            </form>
+        </section>
+
+        <!-- Passo 4: resultado -->
+        <section class="passo" id="passo-resultado" aria-labelledby="titulo-resultado" hidden>
+            <div class="selo-grande" id="resultado-selo" aria-hidden="true"></div>
+            <h1 id="titulo-resultado" class="entrada-titulo">Você é <span id="resultado-perfil"></span>!</h1>
+            <p class="entrada-texto" id="resultado-texto"></p>
+            <div class="bonus">
+                <p>Você ganhou</p>
+                <p class="bonus-valor">G$ 10.000</p>
+                <p>em Granas, a moeda virtual do app, para fazer seu primeiro investimento.</p>
+            </div>
+            <button type="button" class="botao botao-destaque botao-largo" id="botao-entrar">Fazer meu primeiro investimento</button>
+        </section>
+    </main>
+
+    <!-- ===================== APLICATIVO ===================== -->
+    <div id="app" class="app" hidden>
+
+        <header class="topo">
+            <img src="img/logo-escuro.png" alt="EducaGrana" class="topo-logo" width="480" height="176">
+            <div class="topo-status">
+                <p class="topo-saldo"><span class="rotulo-invisivel">Saldo em Granas:</span> <span id="topo-saldo">G$ 0</span></p>
+                <p class="topo-nivel" id="topo-nivel">Nível 1</p>
+            </div>
+        </header>
+
+        <main id="conteudo" tabindex="-1" aria-label="Conteúdo do app" hidden>
+
+            <!-- INÍCIO -->
+            <section class="tela" id="tela-inicio" aria-labelledby="titulo-inicio">
+
+                <!-- Saudação, avatar, sequência e nível -->
+                <div class="inicio-topo">
+                    <span class="inicio-avatar" id="inicio-avatar"></span>
+                    <div class="inicio-ola">
+                        <h1 id="titulo-inicio" class="inicio-titulo"><span id="inicio-saudacao">Olá</span>, <span id="inicio-nome"></span>!</h1>
+                        <p class="inicio-selo" id="inicio-selo"></p>
+                        <button type="button" class="pilula-colheita" id="inicio-colheita" data-ir-tela="perfil" hidden>🧺 Frutos para colher!</button>
+                    </div>
+                    <p class="sequencia-selo" id="inicio-sequencia"></p>
+                    <div class="inicio-nivel">
+                        <p class="linha-entre">
+                            <span>Nível <strong id="inicio-nivel">1</strong></span>
+                            <span class="dica" id="inicio-falta-xp"></span>
+                        </p>
+                        <progress class="barra" id="inicio-barra-xp" max="100" value="0" aria-label="Progresso até o próximo nível"></progress>
+                    </div>
+                </div>
+
+                <!-- Patrimônio com minigráfico -->
+                <div class="cartao cartao-escuro patrimonio">
+                    <p class="cartao-rotulo">Patrimônio virtual</p>
+                    <div class="patrimonio-linha">
+                        <p class="cartao-valor" id="inicio-patrimonio">G$ 0</p>
+                        <p class="variacao" id="inicio-variacao"></p>
+                    </div>
+                    <figure class="grafico">
+                        <svg id="inicio-grafico" class="grafico-svg" viewBox="0 0 100 32" preserveAspectRatio="none" role="img" aria-labelledby="inicio-grafico-legenda"></svg>
+                        <figcaption class="cartao-detalhe" id="inicio-grafico-legenda"></figcaption>
+                    </figure>
+                </div>
+
+                <!-- Ações rápidas -->
+                <div class="acoes-rapidas" role="group" aria-label="Ações rápidas">
+                    <button type="button" class="acao-rapida" data-ir-tela="investir"><span class="acao-icone" aria-hidden="true">📈</span>Investir</button>
+                    <button type="button" class="acao-rapida" data-ir-tela="financas"><span class="acao-icone" aria-hidden="true">🧾</span>Gasto</button>
+                    <button type="button" class="acao-rapida" data-ir-tela="metas"><span class="acao-icone" aria-hidden="true">🎯</span>Meta</button>
+                    <button type="button" class="acao-rapida" data-ir-tela="aprender"><span class="acao-icone" aria-hidden="true">🗺️</span>Trilha</button>
+                </div>
+
+                <!-- Dica do dia -->
+                <div class="dica-do-dia">
+                    <span class="brotinho-rosto" aria-hidden="true">🌱</span>
+                    <div>
+                        <h2 class="dica-do-dia-titulo">Dica do dia</h2>
+                        <p id="inicio-dica"></p>
+                    </div>
+                </div>
+
+                <!-- Primeiros passos (some quando o usuário completa os 3) -->
+                <div class="cartao comece" id="inicio-comece">
+                    <h2 class="cartao-titulo">Comece por aqui</h2>
+                    <p class="dica">Três passos para pegar o jeito do EducaGrana.</p>
+                    <ol class="passos" id="inicio-passos"></ol>
+                </div>
+
+                <!-- Resumo de Finanças e Metas -->
+                <div class="resumo-inicio" id="inicio-resumo"></div>
+
+                <!-- Missões -->
+                <div class="linha-entre">
+                    <h2 class="secao-titulo">Missões de hoje</h2>
+                    <button type="button" class="botao-link" id="botao-todas-missoes" aria-expanded="false" aria-controls="lista-missoes">Ver todas</button>
+                </div>
+                <ul class="missoes" id="lista-missoes"></ul>
+
+                <!-- Trilha -->
+                <div class="cartao cartao-trilha">
+                    <span class="cartao-trilha-icone" aria-hidden="true">🗺️</span>
+                    <div>
+                        <h2 class="cartao-titulo">Trilha do Conhecimento</h2>
+                        <p class="dica" id="inicio-trilha-texto"></p>
+                    </div>
+                    <button type="button" class="botao botao-destaque botao-largo cartao-trilha-botao" id="botao-jogar-trilha">Jogar</button>
+                </div>
+            </section>
+
+            <!-- FINANÇAS -->
+            <section class="tela" id="tela-financas" aria-labelledby="titulo-financas" hidden>
+                <div class="linha-entre financas-topo">
+                    <h1 id="titulo-financas" class="tela-titulo">Minhas finanças</h1>
+                </div>
+                <div class="seletor-mes">
+                    <button type="button" class="botao-icone" id="fin-mes-anterior" aria-label="Mês anterior">‹</button>
+                    <p class="seletor-mes-nome" id="fin-mes" aria-live="polite"></p>
+                    <button type="button" class="botao-icone" id="fin-mes-proximo" aria-label="Próximo mês">›</button>
+                </div>
+
+                <div class="resumo-financas">
+                    <div class="mini-cartao">
+                        <p class="cartao-rotulo">Receitas</p>
+                        <p class="mini-valor positivo" id="fin-receitas">R$ 0,00</p>
+                    </div>
+                    <div class="mini-cartao">
+                        <p class="cartao-rotulo">Despesas</p>
+                        <p class="mini-valor negativo" id="fin-despesas">R$ 0,00</p>
+                    </div>
+                    <div class="mini-cartao mini-cartao-largo">
+                        <p class="cartao-rotulo">Saldo do mês</p>
+                        <p class="mini-valor" id="fin-saldo">R$ 0,00</p>
+                    </div>
+                </div>
+
+                <div class="cartao orcamento" id="fin-orcamento"></div>
+                <div id="fin-alertas" aria-live="polite"></div>
+
+                <div class="cartao">
+                    <h2 class="cartao-titulo">Para onde foi o dinheiro</h2>
+                    <div class="grafico-gastos" id="fin-grafico"></div>
+                </div>
+
+                <h2 class="secao-titulo">Indicadores</h2>
+                <div class="indicadores" id="fin-indicadores"></div>
+
+                <div class="brotinho">
+                    <span class="brotinho-rosto" aria-hidden="true">🌱</span>
+                    <p class="brotinho-fala" id="fin-brotinho"></p>
+                </div>
+
+                <div class="linha-entre">
+                    <h2 class="secao-titulo">Limites por categoria</h2>
+                    <button type="button" class="botao-link" id="botao-novo-limite">+ Novo limite</button>
+                </div>
+                <ul class="categorias" id="lista-categorias"></ul>
+
+                <h2 class="secao-titulo">Lançamentos</h2>
+                <div class="filtros" role="group" aria-label="Filtrar lançamentos">
+                    <button type="button" class="filtro filtro-lanc" data-filtro-lanc="todos" aria-pressed="true">Todos</button>
+                    <button type="button" class="filtro filtro-lanc" data-filtro-lanc="receita" aria-pressed="false">Receitas</button>
+                    <button type="button" class="filtro filtro-lanc" data-filtro-lanc="despesa" aria-pressed="false">Despesas</button>
+                </div>
+                <ul class="dias-lancamentos" id="lista-lancamentos"></ul>
+
+                <button type="button" class="botao-flutuante" id="botao-novo-lancamento" aria-label="Novo lançamento">+</button>
+            </section>
+
+            <!-- METAS -->
+            <section class="tela" id="tela-metas" aria-labelledby="titulo-metas" hidden>
+                <div class="linha-entre">
+                    <h1 id="titulo-metas" class="tela-titulo">Minhas metas</h1>
+                    <button type="button" class="botao botao-destaque botao-pequeno" id="botao-nova-meta">+ Nova meta</button>
+                </div>
+
+                <div class="cartao cartao-escuro metas-resumo" id="metas-resumo"></div>
+
+                <div>
+                    <h2 class="secao-titulo">Ideias para começar</h2>
+                    <div class="ideias" id="ideias-metas"></div>
+                </div>
+
+                <div class="filtros" role="group" aria-label="Filtrar metas por prazo">
+                    <button type="button" class="filtro filtro-prazo" data-filtro-prazo="todas" aria-pressed="true">Todas</button>
+                    <button type="button" class="filtro filtro-prazo" data-filtro-prazo="curto" aria-pressed="false">Curto prazo</button>
+                    <button type="button" class="filtro filtro-prazo" data-filtro-prazo="medio" aria-pressed="false">Médio prazo</button>
+                    <button type="button" class="filtro filtro-prazo" data-filtro-prazo="longo" aria-pressed="false">Longo prazo</button>
+                </div>
+
+                <ul class="metas" id="lista-metas"></ul>
+            </section>
+
+            <!-- INVESTIR -->
+            <section class="tela" id="tela-investir" aria-labelledby="titulo-investir" hidden>
+                <h1 id="titulo-investir" class="tela-titulo">Investir</h1>
+                <p class="aviso">Simulação educativa com Granas (dinheiro virtual). Taxas fictícias, não é recomendação.</p>
+
+                <div class="cartao cartao-escuro">
+                    <p class="cartao-rotulo">Investido agora</p>
+                    <div class="patrimonio-linha">
+                        <p class="cartao-valor" id="inv-investido">G$ 0</p>
+                    </div>
+                    <p class="variacao" id="inv-rentabilidade"></p>
+                    <div class="linha-entre inv-linha">
+                        <p class="cartao-detalhe">Disponível: <strong id="inv-disponivel">G$ 0</strong></p>
+                        <p class="cartao-detalhe">Mês <strong id="inv-mes">1</strong></p>
+                    </div>
+                    <div class="inv-botoes">
+                        <button type="button" class="botao botao-amarelo" id="botao-avancar-mes">Avançar 1 mês</button>
+                        <button type="button" class="botao botao-claro" id="botao-avancar-6">Avançar 6 meses</button>
+                    </div>
+                </div>
+
+                <div class="cartao noticia" id="inv-noticia" hidden></div>
+
+                <div class="cartao">
+                    <h2 class="cartao-titulo">Como sua carteira está dividida</h2>
+                    <div class="grafico-gastos" id="inv-composicao"></div>
+                </div>
+                <div class="brotinho">
+                    <span class="brotinho-rosto" aria-hidden="true">🌱</span>
+                    <p class="brotinho-fala" id="inv-brotinho"></p>
+                </div>
+
+                <h2 class="secao-titulo">Minha carteira</h2>
+                <ul class="carteira" id="lista-carteira"></ul>
+
+                <h2 class="secao-titulo">Produtos</h2>
+                <div class="filtros" role="group" aria-label="Filtrar produtos por risco">
+                    <button type="button" class="filtro filtro-risco" data-filtro="todos" aria-pressed="true">Todos</button>
+                    <button type="button" class="filtro filtro-risco" data-filtro="baixo" aria-pressed="false">Risco baixo</button>
+                    <button type="button" class="filtro filtro-risco" data-filtro="medio" aria-pressed="false">Risco médio</button>
+                    <button type="button" class="filtro filtro-risco" data-filtro="alto" aria-pressed="false">Risco alto</button>
+                </div>
+                <ul class="produtos" id="lista-produtos"></ul>
+            </section>
+
+            <!-- APRENDER: TRILHA DO CONHECIMENTO -->
+            <section class="tela" id="tela-aprender" aria-labelledby="titulo-aprender" hidden>
+                <h1 id="titulo-aprender" class="tela-titulo">Trilha do Conhecimento</h1>
+
+                <div class="trilha-placar">
+                    <p class="placar-item"><span class="placar-valor">🔥 <span id="trilha-sequencia">0</span></span><span class="placar-rotulo">dias seguidos</span></p>
+                    <p class="placar-item"><span class="placar-valor">⭐ <span id="trilha-estrelas">0/27</span></span><span class="placar-rotulo">estrelas</span></p>
+                    <p class="placar-item"><span class="placar-valor">🗺️ <span id="trilha-fases">0/9</span></span><span class="placar-rotulo">fases</span></p>
+                </div>
+
+                <div class="brotinho brotinho-mapa">
+                    <span class="brotinho-rosto" aria-hidden="true">🌱</span>
+                    <p class="brotinho-fala" id="trilha-fala" aria-live="polite"></p>
+                </div>
+
+                <div class="cartao desafio" id="trilha-desafio" aria-live="polite"></div>
+
+                <div class="mapa-area">
+                    <p class="mapa-largada" aria-hidden="true">Largada</p>
+                    <svg class="trilha-caminho" id="trilha-caminho" aria-hidden="true" focusable="false"></svg>
+                    <ol class="trilha-mapa" id="trilha-mapa"></ol>
+                </div>
+            </section>
+
+            <!-- PERFIL -->
+            <section class="tela" id="tela-perfil" aria-labelledby="titulo-perfil-app" hidden>
+                <h1 id="titulo-perfil-app" class="rotulo-invisivel">Meu perfil</h1>
+                <div class="perfil-topo">
+                    <div class="pe-grande" id="perfil-pe"></div>
+                    <p class="estagio-texto">Estágio: <strong id="perfil-estagio"></strong></p>
+                    <p class="perfil-nome"><span id="perfil-nome"></span>
+                        <button type="button" class="botao-icone botao-icone-claro" id="botao-editar-nome" aria-label="Editar nome">✏️</button>
+                    </p>
+                    <p class="selo" id="perfil-selo"></p>
+                    <div class="perfil-nivel">
+                        <p>Nível <strong id="perfil-nivel">1</strong></p>
+                        <progress class="barra" id="perfil-barra-xp" max="100" value="0" aria-label="Progresso até o próximo nível"></progress>
+                        <p class="cartao-detalhe" id="perfil-xp-texto"></p>
+                        <p class="cartao-detalhe proximo-estagio" id="perfil-proximo-estagio"></p>
+                    </div>
+                    <div class="colheita" id="perfil-colheita" tabindex="-1" aria-live="polite"></div>
+                </div>
+
+                <div class="estatisticas" id="perfil-estatisticas"></div>
+
+                <div class="linha-entre">
+                    <h2 class="secao-titulo">Conquistas</h2>
+                    <p class="dica" id="perfil-conquistas-total"></p>
+                </div>
+                <ul class="medalhas" id="lista-conquistas"></ul>
+
+                <div class="linha-entre">
+                    <h2 class="secao-titulo">Coleção de cartas</h2>
+                    <p class="dica" id="perfil-cartas-total"></p>
+                </div>
+                <p class="dica">Cada fase concluída na Trilha libera uma carta com o resumo do ativo.</p>
+                <ul class="colecao" id="lista-cartas"></ul>
+
+                <h2 class="secao-titulo">Evolução do seu Pé de Grana</h2>
+                <p class="dica">Ele cresce conforme você aprende e sobe de nível.</p>
+                <ol class="estagios" id="lista-estagios"></ol>
+
+                <h2 class="secao-titulo">Vaso</h2>
+                <p class="dica">Alguns vasos são prêmio de conquistas.</p>
+                <div class="vasos" role="radiogroup" aria-label="Cor do vaso" id="lista-vasos"></div>
+
+                <h2 class="secao-titulo">Acessibilidade</h2>
+                <div class="cartao ajustes">
+                    <button type="button" class="interruptor" role="switch" aria-checked="false" data-ajuste="textoMaior">
+                        <span><strong>Texto maior</strong><span class="dica">Aumenta todas as letras do app</span></span>
+                        <span class="interruptor-trilho" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="interruptor" role="switch" aria-checked="false" data-ajuste="semAnimacao">
+                        <span><strong>Reduzir animações</strong><span class="dica">Deixa peixes, roleta e transições parados</span></span>
+                        <span class="interruptor-trilho" aria-hidden="true"></span>
+                    </button>
+                </div>
+
+                <h2 class="secao-titulo">Configurações</h2>
+                <div class="cartao configuracoes">
+                    <button type="button" class="botao botao-contorno botao-largo" id="botao-sobre">Sobre o EducaGrana</button>
+                    <button type="button" class="botao botao-contorno botao-largo" id="botao-refazer-quiz">Refazer quiz de perfil</button>
+                    <button type="button" class="botao botao-perigo botao-largo" id="botao-reiniciar">Apagar dados e recomeçar</button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Navegação entre as telas -->
+        <nav class="navegacao" aria-label="Principal">
+            <ul>
+                <li><a href="#inicio" data-tela="inicio"><span aria-hidden="true">🏠</span> Início</a></li>
+                <li><a href="#financas" data-tela="financas"><span aria-hidden="true">🧾</span> Finanças</a></li>
+                <li><a href="#metas" data-tela="metas"><span aria-hidden="true">🎯</span> Metas</a></li>
+                <li><a href="#investir" data-tela="investir"><span aria-hidden="true">📈</span> Investir</a></li>
+                <li><a href="#aprender" data-tela="aprender"><span aria-hidden="true">🗺️</span> Trilha</a></li>
+                <li><a href="#perfil" data-tela="perfil"><span aria-hidden="true">👤</span> Perfil</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- ===================== MODAL ===================== -->
+    <dialog id="modal" class="modal" aria-labelledby="modal-titulo">
+        <div class="modal-cabecalho">
+            <h2 id="modal-titulo">Detalhes</h2>
+            <button type="button" class="modal-fechar" id="modal-fechar" aria-label="Fechar">×</button>
+        </div>
+        <div class="modal-corpo" id="modal-corpo"></div>
+    </dialog>
+
+    <!-- ===================== JANELA DOS JOGOS ===================== -->
+    <dialog id="jogo" class="jogo" aria-labelledby="jogo-titulo">
+        <div class="jogo-cabecalho">
+            <h2 id="jogo-titulo">Fase</h2>
+            <p class="jogo-moedas"><span aria-hidden="true">🪙</span> <span id="jogo-moedas">0</span><span class="rotulo-invisivel"> moedas</span></p>
+            <button type="button" class="modal-fechar" id="jogo-fechar" aria-label="Sair do jogo">×</button>
+        </div>
+        <div class="jogo-corpo" id="jogo-corpo"></div>
+        <p class="rotulo-invisivel" id="jogo-anuncio" aria-live="polite"></p>
+    </dialog>
+
+    <!-- Avisos rápidos (lidos pelo leitor de tela) -->
+    <div class="avisos" id="avisos" role="status" aria-live="polite"></div>
+
+    <script src="js/trilha.js"></script>
+    <script src="js/pe.js"></script>
+    <script src="js/financas.js"></script>
+    <script src="js/metas.js"></script>
+    <script src="js/investir.js"></script>
+    <script src="js/perfil.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
